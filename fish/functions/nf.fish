@@ -1,0 +1,3 @@
+function nf
+neofetch
+end

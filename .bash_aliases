@@ -1,0 +1,8 @@
+alias py="python3"
+alias cls="clear"
+alias project="cd ~/projects"
+alias update="sudo apt-get update; sudo apt-get upgrade -y; sudo apt-get autoremove -y"
+alias env="python -m venv env"
+alias gs="git status"
+alias senv="source env/bin/activate"
+alias freeze="pip freeze > requirements.txt"

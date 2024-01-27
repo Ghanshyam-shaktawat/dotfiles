@@ -1,0 +1,107 @@
+# format = """\
+# [┌──](#7DF9AA)\
+# [](bg:#030B16 fg:#7DF9AA)\
+# [ ](bg:#7DF9AA fg:#090c0c)\
+# [](fg:#7DF9AA bg:#1C3A5E)\
+# $time\
+# [](fg:#1C3A5E bg:#3B76F0)\
+# $directory\
+# [](fg:#3B76F0 bg:#FCF392)\
+# $git_branch\
+# [](fg:#FCF392 bg:#f542f2)\
+# $python\
+# $nodejs\
+# [](fg:#f542f2 bg:#030B16)\
+# $battery
+# [│](#7DF9AA)
+# [└───](#7DF9AA)
+# """
+
+[hostname]
+ssh_only = false
+format = "[gss-ubuntu](bold yellow) "
+disabled = false
+
+[username]
+style_user = " green bold"
+style_root = "red bold"
+disabled = true
+show_always = true
+
+[character]
+success_symbol = "[➜](bold green)"
+error_symbol = "[✗](bold red)"
+
+[directory]
+format = "[$path ]($style)"
+truncation_symbol = "../"
+read_only = " "
+truncation_length = 3
+style = "bold italic #8cdff1"
+truncate_to_repo = false
+
+[python]
+symbol = " "
+pyenv_version_name = true
+format = 'via [${symbol}python (${version} )(\($virtualenv\) )]($style)'
+style = "bold yellow"
+pyenv_prefix = "venv "
+python_binary = ["./venv/bin/python", "python", "python3", "python2"]
+detect_extensions = ["py"]
+version_format = "v${raw}"
+
+[nodejs]
+format = "via [󰎙 Node.js $version](bold green) "
+detect_files = ["package.json", ".node-version"]
+detect_folders = ["node_modules"]
+
+[docker_context]
+symbol = " "
+format = "via [$symbol$context]($style) "
+style = "blue bold"
+only_with_files = true
+detect_files = ["docker-compose.yml", "docker-compose.yaml", "Dockerfile"]
+detect_folders = []
+disabled = false
+
+[java]
+symbol = " "
+style = "red"
+
+[package]
+symbol = " "
+
+[git_branch]
+format = 'on[ $symbol$branch(:$remote_branch) ]($style)'
+symbol = "  "
+style = "bold #ec73b3"
+
+[git_status]
+format = '[\[$all_status\]]($style) '
+style = "bold #ec73b3"
+
+# [git_metrics]
+# format = "([+$added]($added_style))[]($added_style)"
+# added_style = "fg:#1C3A5E"
+# deleted_style = "fg:bright-red bg:235"
+# disabled = false
+
+[cmd_duration]
+min_time = 5
+disabled = false
+
+# [time]
+# disabled = false
+# time_format = "%I:%M %p" # Hour:Minute Format
+# style = "bg:#1d2230"
+# format = '[[ 󱑍 $time ](bg:#1C3A5E fg:#8DFBD2)]($style)'
+
+# [battery]
+# full_symbol = "🔋"
+# charging_symbol = "🔌"
+# discharging_symbol = "⚡️"
+# format = "[ <$symbol$percentage > ]($style)"
+
+# [[battery.display]]
+# threshold = 30
+# style = "bold red"

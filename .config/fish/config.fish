@@ -29,6 +29,6 @@ export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix'
 if status is-interactive
     source $XDG_CONFIG_HOME/fish/colors.fish
 
-    # https://github.com/starship/starship#fish
+    ##https://github.com/starship/starship#fish
     starship init fish | source
 end

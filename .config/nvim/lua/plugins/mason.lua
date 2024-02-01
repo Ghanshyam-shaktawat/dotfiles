@@ -12,12 +12,12 @@ return {
         'json-lsp',
         'css-lsp',
         'html-lsp',
-        'flake8',
         'black',
         'ruff',
         'prettier',
         'markdownlint',
         'eslint-lsp',
+        'eslint_d',
         'jdtls',
       })
     end,

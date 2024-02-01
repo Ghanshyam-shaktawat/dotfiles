@@ -4,7 +4,7 @@ return {
   opts = {
     formatters_by_ft = {
       lua = { 'stylua' },
-      python = { 'black', 'ruff', 'autopep8' },
+      python = { 'black', 'ruff' },
       javascript = { 'prettier' },
       javascriptreact = { 'prettier' },
       typescript = { 'prettier' },
@@ -14,6 +14,8 @@ return {
       scss = { 'prettier' },
       less = { 'prettier' },
       json = { 'prettier' },
+      xml = { 'xmlformatter' },
+      java = { 'jdtls' },
     },
   },
 }

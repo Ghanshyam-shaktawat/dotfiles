@@ -56,6 +56,7 @@ abbr -a -g gpuo 'git push -u origin'
 abbr -a -g gra 'git remote add'
 abbr -a -g gre 'git reset'
 abbr -a -g gs 'git status'
+abbr -a -g gd 'git diff'
 
 # NPM
 abbr -a -g nb 'npm build'

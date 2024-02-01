@@ -36,9 +36,9 @@ error_symbol = "[✗](bold red)"
 format = "[$path ]($style)"
 truncation_symbol = "../"
 read_only = " "
-truncation_length = 3
+truncation_length = 2
 style = "bold italic #8cdff1"
-truncate_to_repo = false
+truncate_to_repo = true
 
 [python]
 symbol = " "

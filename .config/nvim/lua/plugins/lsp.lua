@@ -5,12 +5,15 @@ return {
     -- https://github.com/mfussenegger/nvim-lint
     enabled = true,
     opts = {
+      events = { 'BufWritePost', 'BufReadPost', 'InsertLeave' },
       linters_by_ft = {
         -- this extends lazyvim's nvim-lint setup
         -- https://www.lazyvim.org/extras/linting/nvim-lint
-        python = { 'ruff', 'flake8' },
-        javascript = { 'eslint' },
-        typescript = { 'eslint' },
+        python = { 'ruff' },
+        javascript = { 'eslint_d' },
+        typescript = { 'eslitn_d' },
+        javascriptreact = { 'eslint_d' },
+        typescriptreact = { 'eslint_d' },
       },
     },
   },
@@ -19,7 +22,7 @@ return {
     'neovim/nvim-lspconfig',
     opts = {
       -- -@type lspconfig.options
-      inlay_hints = { enabled = false },
+      inlay_hints = { enabled = true },
       servers = {
         pyright = {
           enabled = true,

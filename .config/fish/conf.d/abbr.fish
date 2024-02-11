@@ -26,6 +26,7 @@ abbr -a -g fs funcsave
 # Moving around
 abbr -a -g .. 'cd ..'
 abbr -a -g ... 'cd ../../'
+abbr -a -g .... 'cd ../../../'
 abbr -a -g - 'cd -'
 
 # date/time
@@ -76,8 +77,7 @@ abbr -a -g nv 'npm --version'
 abbr -a -g pl 'pip list'
 abbr -a -g pi 'pip install -r requirements.txt'
 abbr -a -g pd 'pip insall django'
-abbr -a -g pr 'py run manage.py'
 abbr -a -g pmm 'py manage.py makemigrations'
 abbr -a -g pm 'py manage.py migrate'
-abbr -a -g ps 'py manage.py createsuperuser'
-abbr -a -g prs 'py manage.py runserver'
+abbr -a -g pms 'py manage.py createsuperuser'
+abbr -a -g pmr 'py manage.py runserver'

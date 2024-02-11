@@ -1,22 +1,22 @@
------------------------------------------------
--- name : nvim-lualine
--- url  : https://github.com/nvim-lualine/lualine.nvim
------------------------------------------------
+-- -----------------------------------------------
+-- -- name : nvim-lualine
+-- -- url  : https://github.com/nvim-lualine/lualine.nvim
+-- -----------------------------------------------
 -- local M = {
 --   'nvim-lualine/lualine.nvim',
 --   event = 'VeryLazy',
 -- }
 --
 -- function M.config()
---   local my_filename = require('lualine.components.filename'):extend()
---   my_filename.apply_icon = require('lualine.components.filetype').apply_icon
---   my_filename.colored = true
---
---   local filename_with_path = {
---     my_filename,
---     path = 1,
---     symbols = { modified = ' ', readonly = '', unnamed = ' ' },
---   }
+--   -- local my_filename = require('lualine.components.filename'):extend()
+--   -- my_filename.apply_icon = require('lualine.components.filetype').apply_icon
+--   -- my_filename.colored = true
+--   --
+--   -- local filename_with_path = {
+--   --   my_filename,
+--   --   path = 1,
+--   --   symbols = { modified = ' ', readonly = '', unnamed = ' ' },
+--   -- }
 --
 --   require('lualine').setup({
 --     options = {
@@ -28,21 +28,26 @@
 --       always_divide_middle = true,
 --     },
 --     sections = {
+--       lualine_a = {
+--         'mode',
+--       },
 --       lualine_b = {
 --         'branch',
---         'diff',
+--       },
+--       lualine_c = {
+--         'filetype',
+--         { 'filename', colored = true, color = { fg = '#00ffff' } },
+--       },
+--       lualine_x = {
+--         'encoding',
+--         'fileformat',
 --         {
---           'diagnostics',
---           symbols = {
---             error = '󰅚 ',
---             warn = ' ',
---             info = '󰋽 ',
---             hint = '󰘥 ',
---           },
+--           'diff',
+--           colored = true,
+--           color = { fg = '#ffffff' },
+--           symbols = { added = ' ', modified = ' ', removed = ' ' },
 --         },
 --       },
---       lualine_c = { filename_with_path },
---       lualine_x = { 'filetype' },
 --       lualine_y = {
 --         'progress',
 --         'location',
@@ -63,8 +68,8 @@
 -- end
 --
 -- return M
---
--- statusline
+-- --
+-- -- statusline
 return {
   'nvim-lualine/lualine.nvim',
   event = 'VeryLazy',

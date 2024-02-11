@@ -16,7 +16,6 @@ return {
         'ruff',
         'prettier',
         'markdownlint',
-        'eslint-lsp',
         'eslint_d',
         'jdtls',
       })

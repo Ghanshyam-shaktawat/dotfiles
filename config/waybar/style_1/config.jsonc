@@ -1,0 +1,265 @@
+{
+  "position": "top",
+  "layer": "top",
+  "height": 70,
+  "margin-top": -5,
+  "margin-bottom": 0,
+  "margin-left": 10,
+  "margin-right": 10,
+  "spacing": 6,
+  "modules-left": ["custom/launcher", "hyprland/workspaces"],
+  "modules-center": ["custom/playerctl"],
+  "modules-right": [
+    "tray",
+    "network",
+    "pulseaudio",
+    "battery",
+    "clock#date",
+    "custom/notifications",
+    "custom/power",
+  ],
+
+  // Modules configuration
+  "clock#date": {
+    "format": "{:%I:%M %p  %e %b}", // Icon: calendar-alt
+    //"format": "{:%I:%M %p  %A %b %d}",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "today-format": "<b>{}</b>",
+    "calendar": {
+      "mode": "month",
+      "mode-mon-col": 3,
+      "on-scroll": 1,
+      "format": {
+        "today": "<span color='#ff6699'><b>{}</b></span>",
+      },
+    },
+    "actions": {
+      "on-click-right": "mode",
+      "on-click-forward": "tz_up",
+      "on-click-backward": "tz_down",
+      "on-scroll-up": "shift_up",
+      "on-scroll-down": "shift_down",
+    },
+  },
+
+  // "wlr/workspaces": {
+  //   "active-only": false,
+  //   "all-outputs": true,
+  //   "disable-scroll": false,
+  //   "on-scroll-up": "hyprctl dispatch workspace -1",
+  //   "on-scroll-down": "hyprctl dispatch workspace +1",
+  //   "format": "{icon}",
+  //   "on-click": "activate",
+  //   "format-icons": {
+  //     //			"1": "一",
+  //     //			"2": "二",
+  //     //			"3": "三",
+  //     //			"4": "四",
+  //     //			"5": "五",
+  //     "urgent": "",
+  //     "active": "",
+  //     "default": "󰧞",
+  //     "sort-by-number": true,
+  //   },
+  // },
+
+  "custom/weather": {
+    "format": "{}",
+    "format-alt": "{alt}: {}",
+    "format-alt-click": "click",
+    "interval": 3600,
+    "return-type": "json",
+    "exec": "~/.config/hypr/scripts/weather.sh",
+    "exec-if": "ping wttr.in -c1",
+    "tooltip": true,
+  },
+
+  "temperature": {
+    "interval": 30,
+    "critical-threshold": 80,
+    "format-critical": " {temperatureC}°C",
+    "format-critical": "  {temperatureC}°C",
+    "format": "{icon} {temperatureC}°C",
+    "format-icons": [""],
+    "max-length": 7,
+    "min-length": 7,
+    "on-click": "xsensors",
+  },
+
+  "hyprland/workspaces": {
+    "disable-scroll": false,
+    "on-scroll-up": "hyprctl dispatch workspace -1",
+    "on-scroll-down": "hyprctl dispatch workspace +1",
+    "format": "{icon}",
+    "format-icons": {
+      "1": "一",
+      "2": "二",
+      "3": "三",
+      "4": "四",
+      "5": "五",
+      "6": "六",
+      "7": "七",
+      "8": "八",
+      "9": "九",
+      "10": "〇",
+      //		"active": "",
+      //		"default": "󰧞"
+    },
+    "persistent-workspaces": {
+      "*": 10,
+    },
+  },
+
+  "custom/playerctl": {
+    "format": "<span>{}</span>",
+    "return-type": "json",
+    "exec": "/usr/bin/python3 $HOME/.config/waybar/modules/mediaplayer.py --player spotify",
+    "on-click": "playerctl previous --player spotify",
+    "on-click-right": "playerctl next --player spotify",
+    "on-click-middle": "playerctl play-pause --player spotify",
+    "on-scroll-up": "~/.config/hypr/scripts/spotifyvolumecontrol.sh up",
+    "on-scroll-down": "~/.config/hypr/scripts/spotifyvolumecontrol.sh down",
+    "max-length": 50,
+  },
+
+  "battery": {
+    "interval": 2,
+    "states": {
+      "good": 95,
+      "warning": 30,
+      "critical": 15,
+    },
+    "format": "{icon} {capacity}%",
+    "format-charging": " {capacity}%",
+    "format-plugged": " {capacity}%",
+    "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+  },
+
+  "custom/power": {
+    "format": "",
+    "tooltip": false,
+    "on-click": "sleep 0.1 && bash ~/.config/hypr/scripts/logoutlaunch.sh 1",
+  },
+
+  "memory": {
+    "format": "󰍛 {}%",
+    "format-alt": "󰍛 {used}/{total} GiB",
+    "interval": 1,
+  },
+
+  "cpu": {
+    "format": "󰻠 {usage}%",
+    "format-alt": "󰻠 {avg_frequency} GHz",
+    "interval": 1,
+  },
+  "disk": {
+    "format": "󰆼 {percentage_used}%",
+    "format-alt": "󰆼 {used}/{total} GiB",
+    "interval": 1,
+    "path": "/",
+  },
+
+  "disk#2": {
+    "format": "󰋊 {percentage_used}%",
+    "format-alt": "󰋊 {used}/{total} GiB",
+    "interval": 1,
+    "path": "/home/adriano",
+  },
+
+  "custom/gpu-usage": {
+    "exec": "nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits",
+    "format": "󰢮 {}%",
+    "return-type": "",
+    "interval": 1,
+  },
+
+  "network": {
+    "format-wifi": " {essid}",
+    //"format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
+    "format-ethernet": " {ifname}",
+    "format-linked": "{ifname} (No IP) ",
+    "format": " ",
+    "format-disconnected": " Disconnected",
+    //"on-click": "wl-copy $(ip address show up scope global | grep inet | head -n1 | cut -d/ -f 1 | tr -d [:space:] | cut -c5-)",
+    "on-click": "sleep 0.1 && python ~/.config/rofi/network/network.py",
+    "tooltip-format": " {bandwidthUpBits}  {bandwidthDownBits}\n{ifname}\n{ipaddr}/{cidr}\n",
+    "tooltip-format-wifi": " {essid} {frequency}MHz\nStrength: {signaldBm}dBm ({signalStrength}%)\nIP: {ipaddr}/{cidr}\n {bandwidthUpBits}  {bandwidthDownBits}",
+    "interval": 10,
+  },
+
+  "bluetooth": {
+    "format-on": "󰂯",
+    "format-off": "󰂲",
+    "format-connected": "󰂱",
+    "format-disabled": "󰂲",
+    "on-click": "bash ~/.config/waybar/scripts/bluetoggle.sh",
+    "on-click-right": "bash ~/.config/rofi/bluetooth/bluetooth.sh",
+    // "format-device-preference": [ "device1", "device2" ], // preference list deciding the displayed device
+    "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+    "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
+  },
+
+  "custom/notifications": {
+    "tooltip": false,
+    "format": "{icon}",
+    "icon-size": 22,
+    "max-length": 2,
+    "format-icons": {
+      "notification": "󰂚<span foreground='#DB4740'><sup></sup></span>",
+      "none": "󰂚",
+      "dnd-notification": "󰂛<span foreground='#DB4740'><sup></sup></span>",
+      "dnd-none": "󰂛",
+      "inhibited-notification": "󰂚<span foreground='#DB4740'><sup></sup></span>",
+      "inhibited-none": "󰂚",
+      "dnd-inhibited-notification": "󰂛<span foreground='#DB4740'><sup></sup></span>",
+      "dnd-inhibited-none": "󰂛",
+    },
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb",
+    "on-click": "sleep 0.1; swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true,
+  },
+
+  "tray": {
+    "icon-size": 16,
+    "spacing": 6,
+  },
+
+  "pulseaudio": {
+    "scroll-step": 3, // %, can be a float
+    "format": "{icon} {volume}%",
+    "format-muted": "󰖁 {format_source}",
+    "format-icons": {
+      "default": ["", "", "󰕾", ""],
+    },
+    "on-click": "sleep 0.1 && pavucontrol",
+    "on-click-right": "swayosd-client --output-volume mute-toggle",
+    "icon-size": 20,
+  },
+
+  "custom/launcher": {
+    "format": " 󰣇 ",
+    "on-click": "sleep 0.1; bash ~/.config/hypr/scripts/rofilaunch.sh",
+    "on-click-right": "sleep 0.1; bash ~/.config/rofi/powermenu/powermenu.sh",
+  },
+
+  "custom/wf-recorder": {
+    "format": "{}",
+    "interval": "once",
+    "exec": "echo ''",
+    "tooltip": "false",
+    "exec-if": "pgrep 'wf-recorder'",
+    "on-click": "exec ./scripts/wlrecord.sh",
+    "signal": 8,
+  },
+
+  "custom/hyprpicker": {
+    "format": "󰈋",
+    "on-click": "bash ~/.config/waybar/scripts/hyprpicker-hex.sh",
+    "on-click-right": "bash ~/.config/waybar/scripts/hyprpicker-rgb.sh",
+  },
+}

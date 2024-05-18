@@ -1,3 +1,0 @@
-function nf
-neofetch
-end

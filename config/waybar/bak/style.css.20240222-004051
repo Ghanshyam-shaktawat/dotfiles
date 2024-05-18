@@ -1,0 +1,186 @@
+/*
+     ___                    _     __    _     
+    /   |  _  _____  ____  (_)___/ /__ ( )_____
+   / /| | | |/_/ _ \/ __ \/ / __  / _ \|// ___/
+  / ___ |_>  </  __/ / / / / /_/ /  __/ (__  )
+ /_/  |_/_/|_|\___/_/ /_/_/\__,_/\___/ /____/ 
+ | |     / /___ ___  __/ /_  ____ ______      
+ | | /| / / __ `/ / / / __ \/ __ `/ ___/      
+ | |/ |/ / /_/ / /_/ / /_/ / /_/ / /          
+ |__/|__/\__,_/\__, /_.___/\__,_/_/           
+              /____/                          
+
+ https://github.com/Axenide/Dotfiles
+*/
+
+@import "themes/theme.css";
+
+* {
+  border: none;
+  border-radius: 0px;
+  font-family: "Iosevka Nerd Font";
+  font-size: 9pt;
+  font-style: normal;
+  min-height: 0;
+}
+
+window#waybar {
+  background: @main-bg;
+  padding: 0px 30px;
+  border-radius: 0px;
+  margin: 0px 20px;
+  /* border: 2px solid @brblack; */
+}
+
+#workspaces {
+  background: @main-bg;
+  border-radius: 0px;
+  padding: 0px 4px;
+  margin: 10px;
+  /* box-shadow: 0px 0px 3px rgba(0, 0, 0, 1); */
+  /* border: 1px solid @main-fg; */
+}
+
+#workspaces button {
+  border-radius: 0px;
+  color: @wb-act-fg;
+  transition: all 0.25s ease-in-out;
+}
+
+#workspaces button.persistent {
+  color: @main-act-fg;
+}
+
+#workspaces button.empty {
+  color: @wb-hvr-fg;
+}
+
+#workspaces button.active {
+  color: @wb-hvr-fg;
+  background-color: @wb-hvr-bg;
+  border-radius: 0px;
+  text-shadow:
+    0.25px 0.25px 0 @brgreen,
+    -0.25px 0.25px 0 @brgreen,
+    -0.25px -0.25px 0 @brgreen,
+    0.25px -0.25px 0 @brgreen;
+}
+
+#workspaces button:hover {
+  background-color: transparent;
+  color: @wb-hvr-bg;
+  border-radius: 0px;
+}
+
+#tray {
+  background: rgba(245, 194, 231, 0);
+  padding: 0px 10px;
+  margin: 10px 5px;
+  border-radius: 0px;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 1);
+  border-radius: 7px;
+  border: 2px solid @wb-hvr-bg;
+}
+
+#clock {
+  color: @main-bg;
+  background: @wb-hvr-bg;
+  border-radius: 6px;
+  padding: 0px 14px;
+  margin: 10px 10px 10px 0px;
+  font-weight: bold;
+  /* box-shadow: 0px 0px 3px rgba(0, 0, 0, 1); */
+  /* border: 1px solid @black; */
+}
+
+#custom-launcher {
+  font-size: 12pt;
+  color: @wb-hvr-bg;
+  background: @main-bg;
+  border-radius: 0px;
+  font-family: "Symbols Nerd Font";
+  font-size: 20px;
+  padding: 0px 5px 0px 2px;
+  margin: 10px 0px 10px 10px;
+  /* box-shadow: 0px 0px 3px rgba(0, 0, 0, 1); */
+  /* border: 1px solid @main-fg; */
+}
+
+#custom-playerctl {
+  font-weight: bold;
+  font-style: italic;
+  background: @main-bg;
+  color: @main-fg;
+  padding: 0px 14px;
+  margin: 10px 5px;
+  border-radius: 0px;
+  /* box-shadow: 0px 0px 3px rgba(0, 0, 0, 1); */
+  /* border: 1px solid @main-fg; */
+}
+
+#cpu,
+#memory,
+#disk,
+#custom-gpu-usage {
+  background-color: @main-bg;
+  border-radius: 0px;
+  margin: 5px;
+  padding: 0px 10px;
+  font-weight: bold;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 1);
+  text-shadow: 0px 0px 3px @white;
+  /* border: 1px solid @black; */
+}
+
+#custom-hyprpicker,
+/* #bluetooth, */
+/* #network, */
+#pulseaudio,
+#backlight,
+#battery,
+#custom-notifications {
+  color: @main-fg;
+  font-family: "Symbols Nerd Font";
+  font-size: 10pt;
+  margin: 0;
+  padding: 0 10px;
+}
+
+#custom-hyprpicker {
+  background: linear-gradient(to left, transparent, @black);
+  border-radius: 0px;
+  border-top: solid 3px transparent;
+  border-bottom: solid 3px transparent;
+  padding-left: 15px;
+}
+
+#bluetooth.connected {
+  color: @brgreen;
+}
+
+#bluetooth.off {
+  color: @brblack;
+}
+
+#pulseaudio.muted {
+  color: @brblack;
+}
+
+#battery.charging {
+  color: #47d147;
+}
+
+#battery.warning:not(.charging) {
+  color: red;
+}
+
+#group-applets {
+  color: #000;
+  padding: 0px 8px;
+  margin: 10px 10px 10px 5px;
+  border-radius: 6px;
+  background: rgba(245, 194, 231, 0);
+  border: 2px solid @wb-hvr-bg;
+  /* box-shadow: 0px 0px 3px rgba(0, 0, 0, 1); */
+  /* border: 1px solid @main-fg; */
+}

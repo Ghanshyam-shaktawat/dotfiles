@@ -1,0 +1,215 @@
+@import "themes/theme.css";
+
+* {
+  border: none;
+  border-radius: 0px;
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 9pt;
+  font-style: normal;
+  font-weight: 700;
+  min-height: 0;
+  transition-property: background-color;
+  transition-duration: 0.5s;
+}
+
+window#waybar {
+  background: transparent;
+  padding: 0px 30px;
+  border-radius: 0px;
+  margin: 0px 20px;
+  /* border: 2px solid @brblack; */
+}
+
+/* set background color and border for all elements*/
+#custom-launcher,
+#workspaces,
+#custom-playerctl,
+#tray,
+#group-applets,
+#clock,
+#custom-power,
+#custom-weather,
+#temperature,
+#custom-notifications,
+#battery,
+#pulseaudio,
+#network {
+  border: 2px solid @flamingo;
+  border-radius: 8px;
+  background: @main-bg;
+  margin: 10px 0px;
+}
+
+/**/
+/* WORKSPACES */
+/**/
+#workspaces {
+  padding: 8px 8px;
+}
+
+#workspaces button {
+  border-radius: 0px;
+  color: @wb-act-fg;
+  transition: all 0.25s ease-in-out;
+}
+
+#workspaces button.persistent {
+  color: @main-act-fg;
+}
+
+#workspaces button.empty {
+  color: @wb-hvr-fg;
+}
+
+#workspaces button.active {
+  color: @wb-hvr-fg;
+  background-color: @wb-hvr-bg;
+  border-radius: 0px;
+  text-shadow:
+    0.25px 0.25px 0 @brgreen,
+    -0.25px 0.25px 0 @brgreen,
+    -0.25px -0.25px 0 @brgreen,
+    0.25px -0.25px 0 @brgreen;
+}
+
+#workspaces button:hover {
+  background-color: transparent;
+  color: @wb-hvr-bg;
+  border-radius: 0px;
+}
+
+/**/
+/* Power button */
+/**/
+#custom-power {
+  padding: 0px 15px 0px 12px;
+}
+
+/*
+TRAY
+*/
+#tray {
+  padding: 0px 10px;
+}
+
+/*
+CLOCK
+*/
+#clock {
+  color: @main-fg;
+  padding: 0px 14px;
+  font-weight: bold;
+  font-size: 10pt;
+  font-weight: 800;
+}
+
+/*Weather*/
+#custom-weather {
+  color: @main-fg;
+  padding: 0px 16px 0px 14px;
+  font-weight: bold;
+}
+
+/**/
+/* Temperature */
+/**/
+#temperature,
+#network,
+#pulseaudio,
+#battery,
+#custom-notifications {
+  color: @main-fg;
+  padding: 0px 16px;
+  font-weight: bold;
+  font-size: 10pt;
+}
+
+/*
+LAUNCHER
+*/
+#custom-launcher {
+  color: @wb-hvr-bg;
+  font-family: "Symbols Nerd Font";
+  font-size: 20px;
+  padding: 0px 5px 0px 2px;
+}
+
+/*
+PLAYER
+*/
+#custom-playerctl {
+  font-weight: 800;
+  font-style: italic;
+  color: @main-fg;
+  padding: 0px 14px;
+  font-size: 9pt;
+}
+
+#cpu,
+#memory,
+#disk,
+#custom-gpu-usage {
+  background-color: @main-bg;
+  border-radius: 0px;
+  padding: 0px 10px;
+  font-weight: bold;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 1);
+  text-shadow: 0px 0px 3px @white;
+  border: 1px solid @border-clr;
+}
+
+#custom-hyprpicker,
+/* #border-clrtooth, */
+/* #network, */
+#backlight {
+  color: @main-fg;
+  font-family: "Symbols Nerd Font";
+  font-size: 10pt;
+  margin: 0;
+  padding: 0 10px;
+}
+
+#custom-hyprpicker {
+  background: linear-gradient(to left, transparent, @black);
+  border-radius: 0px;
+  border-top: solid 3px transparent;
+  border-bottom: solid 3px transparent;
+  padding-left: 15px;
+}
+
+/*
+NOTIFICATIONS
+*/
+#custom-notifications {
+  color: @main-fg;
+  font-weight: bold;
+}
+
+#border-clrtooth.connected {
+  color: @brgreen;
+}
+
+#border-clrtooth.off {
+  color: @brblack;
+}
+
+#pulseaudio.muted {
+  color: @brblack;
+}
+
+#battery.charging {
+  color: #47d147;
+}
+
+#battery.warning:not(.charging) {
+  color: red;
+}
+
+/*
+APPLETS
+*/
+#group-applets {
+  color: @main-fg;
+  padding: 0px 10px;
+  font-size: 1.5rem;
+}

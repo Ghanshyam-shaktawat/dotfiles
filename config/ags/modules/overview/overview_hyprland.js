@@ -25,7 +25,6 @@ const overviewTick = Variable(false);
 
 export default (overviewMonitor = 0) => {
   const clientMap = new Map();
-  let workspaceGroup = 0;
   const ContextMenuWorkspaceArray = ({ label, actionFunc, thisWorkspace }) =>
     Widget.MenuItem({
       label: `${label}`,
@@ -179,25 +178,25 @@ export default (overviewMonitor = 0) => {
           children: [
             appIcon,
             // TODO: Add xwayland tag instead of just having italics
-            Widget.Revealer({
-              transition: "slide_right",
-              revealChild: revealInfoCondition,
-              child: Widget.Revealer({
-                transition: "slide_down",
-                revealChild: revealInfoCondition,
-                child: Widget.Label({
-                  maxWidthChars: 10, // Doesn't matter what number
-                  truncate: "end",
-                  className: `margin-top-5 ${xwayland ? "txt txt-italic" : "txt"}`,
-                  css: `
-                                font-size: ${(Math.min(monitors[monitor].width, monitors[monitor].height) * userOptions.overview.scale) / 14.6}px;
-                                margin: 0px ${(Math.min(monitors[monitor].width, monitors[monitor].height) * userOptions.overview.scale) / 10}px;
-                            `,
-                  // If the title is too short, include the class
-                  label: title.length <= 1 ? `${c}: ${title}` : title,
-                }),
-              }),
-            }),
+            // Widget.Revealer({
+            //   transition: "slide_right",
+            //   revealChild: revealInfoCondition,
+            //   child: Widget.Revealer({
+            //     transition: "slide_down",
+            //     revealChild: revealInfoCondition,
+            //     child: Widget.Label({
+            //       maxWidthChars: 10, // Doesn't matter what number
+            //       truncate: "end",
+            //       className: `margin-top-5 ${xwayland ? "txt txt-italic" : "txt"}`,
+            //       css: `
+            //                     font-size: ${(Math.min(monitors[monitor].width, monitors[monitor].height) * userOptions.overview.scale) / 14.6}px;
+            //                     margin: 0px ${(Math.min(monitors[monitor].width, monitors[monitor].height) * userOptions.overview.scale) / 10}px;
+            //                 `,
+            //       // If the title is too short, include the class
+            //       label: title.length <= 1 ? `${c}: ${title}` : title,
+            //     }),
+            //   }),
+            // }),
           ],
         }),
       }),
@@ -406,6 +405,10 @@ export default (overviewMonitor = 0) => {
     Widget.Box({
       children: arr(startWorkspace, workspaces).map(Workspace),
       attribute: {
+        workspaceGroup: Math.floor(
+          (Hyprland.active.workspace.id - 1) / NUM_OF_WORKSPACES_SHOWN,
+        ),
+
         monitorMap: [],
         getMonitorMap: (box) => {
           execAsync("hyprctl -j monitors").then((monitors) => {
@@ -423,7 +426,6 @@ export default (overviewMonitor = 0) => {
             Math.floor(
               (Hyprland.active.workspace.id - 1) / NUM_OF_WORKSPACES_SHOWN,
             ) * NUM_OF_WORKSPACES_SHOWN;
-          if (!App.getWindow(windowName)?.visible) return;
           Hyprland.messageAsync("j/clients")
             .then((clients) => {
               const allClients = JSON.parse(clients);
@@ -515,6 +517,12 @@ export default (overviewMonitor = 0) => {
               (Hyprland.active.workspace.id - 1) / NUM_OF_WORKSPACES_SHOWN,
             );
             if (currentGroup !== previousGroup) {
+              if (
+                !App.getWindow(windowName) ||
+                !App.getWindow(windowName).visible
+              )
+                return;
+
               box.attribute.update(box);
               box.attribute.workspaceGroup = currentGroup;
             }

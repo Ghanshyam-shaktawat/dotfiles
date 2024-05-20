@@ -7,6 +7,9 @@ const userConfigOptions = {
   time: {
     format: "%I:%M %p",
   },
+  vpn: {
+    uuid: "82c1ccbe-339b-487d-9d49-060c599663cb",
+  },
   keybinds: {
     sidebar: {
       pin: "Ctrl+p",

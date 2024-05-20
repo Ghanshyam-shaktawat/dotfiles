@@ -8,31 +8,35 @@
 //     bind = Super, Tab, exec, ags -t overview
 
 // Import
-import GLib from 'gi://GLib';
-import App from 'resource:///com/github/Aylur/ags/app.js'
-import * as Utils from 'resource:///com/github/Aylur/ags/utils.js'
+import GLib from "gi://GLib";
+import App from "resource:///com/github/Aylur/ags/app.js";
+import * as Utils from "resource:///com/github/Aylur/ags/utils.js";
 // Stuff
-import userOptions from './modules/.configuration/user_options.js';
+import userOptions from "./modules/.configuration/user_options.js";
 // Widgets
-import Overview from './modules/overview/main.js';
+import Overview from "./modules/overview/main.js";
 
-Utils.exec(`bash -c 'echo "" > ${App.configDir}/scss/_musicwal.scss'`); // reset music styles
-Utils.exec(`bash -c 'echo "" > ${App.configDir}/scss/_musicmaterial.scss'`); // reset music styles
-const COMPILED_STYLE_DIR = `${GLib.get_user_cache_dir()}/ags/user/generated`
+const COMPILED_STYLE_DIR = `${GLib.get_user_cache_dir()}/ags/user/generated`;
+Utils.exec(`mkdir -p "${GLib.get_user_state_dir()}/ags/scss"`);
+Utils.exec(
+  `bash -c 'echo "" > ${GLib.get_user_state_dir()}/ags/scss/_musicwal.scss'`,
+); // reset music styles
+Utils.exec(
+  `bash -c 'echo "" > ${GLib.get_user_state_dir()}/ags/scss/_musicmaterial.scss'`,
+); // reset music styles
 async function applyStyle() {
-    Utils.exec(`mkdir -p ${COMPILED_STYLE_DIR}`);
-    Utils.exec(`sass ${App.configDir}/scss/main.scss ${COMPILED_STYLE_DIR}/style.css`);
-    App.resetCss();
-    App.applyCss(`${COMPILED_STYLE_DIR}/style.css`);
-    console.log('[LOG] Styles loaded')
+  Utils.exec(`mkdir -p ${COMPILED_STYLE_DIR}`);
+  Utils.exec(
+    `sass -I "${GLib.get_user_state_dir()}/ags/scss" -I "${App.configDir}/scss/fallback" "${App.configDir}/scss/main.scss" "${COMPILED_STYLE_DIR}/style.css"`,
+  );
+  App.resetCss();
+  App.applyCss(`${COMPILED_STYLE_DIR}/style.css`);
+  console.log("[LOG] Styles loaded");
 }
 applyStyle().catch(print);
 
 App.config({
-    css: `${COMPILED_STYLE_DIR}/style.css`,
-    stackTraceOnError: true,
-    windows: [
-        Overview(),
-    ],
+  css: `${COMPILED_STYLE_DIR}/style.css`,
+  stackTraceOnError: true,
+  windows: [Overview()],
 });
-

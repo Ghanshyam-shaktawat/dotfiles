@@ -44,9 +44,7 @@ export const ToggleIconVpn = (props = {}) =>
     className: "txt-small sidebar-iconbutton",
     tooltipText: "VPN | Right-click to configure",
     onClicked: () => {
-      const vpnConnection = Network.vpn.getConnection(
-        "82c1ccbe-339b-487d-9d49-060c599663cb",
-      );
+      const vpnConnection = Network.vpn.getConnection(userOptions.vpn.uuid);
       if (vpnConnection.state === "connected") {
         vpnConnection.setConnection(false);
       } else {
@@ -57,9 +55,7 @@ export const ToggleIconVpn = (props = {}) =>
     setup: (self) => {
       setupCursorHover(self);
       self.hook(Network, (button) => {
-        const vpnConnection = Network.vpn.getConnection(
-          "82c1ccbe-339b-487d-9d49-060c599663cb",
-        ); // Replace VPN_UUID with your VPN connection's UUID
+        const vpnConnection = Network.vpn.getConnection(userOptions.vpn.uuid); // Replace VPN_UUID with your VPN connection's UUID
         button.toggleClassName(
           "sidebar-button-active",
           vpnConnection.state === "connected",
@@ -224,7 +220,7 @@ export const ModuleInvertColors = async (props = {}) => {
               button.toggleClassName("sidebar-button-active", false);
             } else {
               Hyprland.messageAsync(
-                `j/keyword decoration:screen_shader ${GLib.get_home_dir()}/.config/hypr/shaders/invert.frag`,
+                `j/keyword decoration:screen_shader ${GLib.get_user_config_dir()}/hypr/shaders/invert.frag`,
               ).catch(print);
               button.toggleClassName("sidebar-button-active", true);
             }

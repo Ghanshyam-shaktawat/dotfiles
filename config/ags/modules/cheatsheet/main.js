@@ -5,6 +5,7 @@ import Keybinds from "./keybinds.js";
 import PeriodicTable from "./periodictable.js";
 import { ExpandingIconTabContainer } from "../.commonwidgets/tabcontainer.js";
 import { checkKeybind } from "../.widgetutils/keybind.js";
+import clickCloseRegion from "../.commonwidgets/clickcloseregion.js";
 
 const cheatsheets = [
   {
@@ -15,11 +16,6 @@ const cheatsheets = [
   {
     name: "Periodic table",
     materialIcon: "experiment",
-    contentWidget: PeriodicTable,
-  },
-  {
-    name: "JavaScript",
-    materialIcon: "javascript",
     contentWidget: PeriodicTable,
   },
 ];
@@ -92,21 +88,31 @@ const SheetContent = (id) => {
   return sheetContents[id];
 };
 
-export default (id) =>
-  PopupWindow({
+export default (id) => {
+  const widgetContent = Widget.Box({
+    vertical: true,
+    className: "cheatsheet-bg spacing-v-5",
+    children: [CheatsheetHeader(), SheetContent(id)],
+  });
+  return PopupWindow({
     monitor: id,
     name: `cheatsheet${id}`,
     layer: "overlay",
     keymode: "on-demand",
     visible: false,
+    anchor: ["top", "bottom", "left", "right"],
     child: Widget.Box({
       vertical: true,
       children: [
+        clickCloseRegion({ name: "cheatsheet" }),
         Widget.Box({
-          vertical: true,
-          className: "cheatsheet-bg spacing-v-5",
-          children: [CheatsheetHeader(), SheetContent(id)],
+          children: [
+            clickCloseRegion({ name: "cheatsheet" }),
+            widgetContent,
+            clickCloseRegion({ name: "cheatsheet" }),
+          ],
         }),
+        clickCloseRegion({ name: "cheatsheet" }),
       ],
       setup: (self) =>
         self.on("key-press-event", (widget, event) => {
@@ -118,3 +124,4 @@ export default (id) =>
         }),
     }),
   });
+};

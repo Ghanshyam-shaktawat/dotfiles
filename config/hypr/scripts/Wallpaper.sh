@@ -134,4 +134,5 @@ if [ $? -eq 1 ] ; then
 fi
 
 Wall_Set
+$XDG_CONFIG_HOME/ags/scripts/color_generation/switchwall.sh --noswitch
 

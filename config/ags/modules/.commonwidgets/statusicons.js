@@ -54,11 +54,10 @@ export const VpnOnIndicator = () =>
     transition: "slide_left",
     transitionDuration: userOptions.animations.durationSmall,
     revealChild: false,
+    tooltipText: "vpn connection active",
     setup: (self) =>
       self.hook(Network, (self) => {
-        const vpnConnection = Network.vpn.getConnection(
-          "82c1ccbe-339b-487d-9d49-060c599663cb",
-        );
+        const vpnConnection = Network.vpn.getConnection(userOptions.vpn.uuid);
         if (vpnConnection.state === "connected") self.revealChild = true;
         else if (vpnConnection.state === "disconnected")
           self.revealChild = false;
@@ -295,13 +294,9 @@ export const NetworkIndicator = () =>
           return;
         }
         const primary = Network.primary || "fallback";
-        const vpnConnection = Network.vpn.getConnection(
-          "82c1ccbe-339b-487d-9d49-060c599663cb",
-        );
 
         if (["wifi", "wired"].includes(primary)) {
           stack.shown = primary;
-          if (vpnConnection.state === "connected") stack.shown = "vpn";
         } else stack.shown = "fallback";
       }),
   });

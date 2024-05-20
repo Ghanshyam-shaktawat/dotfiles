@@ -14,6 +14,7 @@ set -gx PROJECTS "$HOME/Projects/"
 
 # Declearing some important aliases for convenience.
 alias vim nvim
+alias vi nvim
 alias fzf "fzf --preview='less {}'"
 
 # use these to set user paths or run set fish_user_paths from the terminal (fish_add_path/fish_user_paths)

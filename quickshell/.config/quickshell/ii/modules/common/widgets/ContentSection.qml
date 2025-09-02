@@ -1,8 +1,8 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import "root:/modules/common/"
-import "root:/modules/common/widgets/"
+import qs.modules.common
+import qs.modules.common.widgets
 
 ColumnLayout {
     id: root
@@ -18,6 +18,11 @@ ColumnLayout {
     }
     ColumnLayout {
         id: sectionContent
+        Layout.fillWidth: true
         spacing: 8
+
+        Item {
+            Layout.fillWidth: true
+        }
     }
 }

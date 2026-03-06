@@ -69,8 +69,8 @@ abbr -a -g pl 'pip list'
 abbr -a -g ps 'sudo pacman -S'
 abbr -a -g pr 'sudo pacman -R'
 
-# pnpm & tauri
-abbr -a -g ptd 'pnpm tauri dev'
-abbr -a -g ptb 'pnpm tauri build'
-abbr -a -g pd 'pnpm dev'
-abbr -a -g pi 'pnpm i'
+# bun & tauri
+abbr -a -g btd 'bun tauri dev'
+abbr -a -g btb 'bun tauri build'
+abbr -a -g bd 'bun dev'
+abbr -a -g bi 'bun i'

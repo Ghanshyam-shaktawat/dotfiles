@@ -25,6 +25,7 @@ Singleton {
             "text": action.text,
         })) ?? []
         property bool popup: false
+        property bool isTransient: notification?.hints.transient ?? false
         property string appIcon: notification?.appIcon ?? ""
         property string appName: notification?.appName ?? ""
         property string body: notification?.body ?? ""
@@ -60,15 +61,20 @@ Singleton {
 
     component NotifTimer: Timer {
         required property int notificationId
-        interval: 5000
+        interval: 7000
         running: true
         onTriggered: () => {
-            root.timeoutNotification(notificationId);
+            const index = root.list.findIndex((notif) => notif.notificationId === notificationId);
+            const notifObject = root.list[index];
+            print("[Notifications] Notification timer triggered for ID: " + notificationId + ", transient: " + notifObject?.isTransient);
+            if (notifObject.isTransient) root.discardNotification(notificationId);
+            else root.timeoutNotification(notificationId);
             destroy()
         }
     }
 
     property bool silent: false
+    property int unread: 0
     property var filePath: Directories.notificationsPath
     property list<Notif> list: []
     property var popupList: list.filter((notif) => notif.popup);
@@ -168,15 +174,19 @@ Singleton {
                 if (notification.expireTimeout != 0) {
                     newNotifObject.timer = notifTimerComponent.createObject(root, {
                         "notificationId": newNotifObject.notificationId,
-                        "interval": notification.expireTimeout < 0 ? 5000 : notification.expireTimeout,
+                        "interval": notification.expireTimeout < 0 ? (Config?.options.notifications.timeout ?? 7000) : notification.expireTimeout,
                     });
                 }
+                root.unread++;
             }
-
             root.notify(newNotifObject);
             // console.log(notifToString(newNotifObject));
             notifFileView.setText(stringifyList(root.list));
         }
+    }
+
+    function markAllRead() {
+        root.unread = 0;
     }
 
     function discardNotification(id) {
@@ -233,7 +243,7 @@ Singleton {
         if (notifServerIndex !== -1) {
             const notifServerNotif = notifServer.trackedNotifications.values[notifServerIndex];
             const action = notifServerNotif.actions.find((action) => action.identifier === notifIdentifier);
-            console.log("Action found: " + JSON.stringify(action));
+            // console.log("Action found: " + JSON.stringify(action));
             action.invoke()
         } 
         else {

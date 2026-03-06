@@ -6,6 +6,10 @@ Item {
 
     enum CornerEnum { TopLeft, TopRight, BottomLeft, BottomRight }
     property var corner: RoundCorner.CornerEnum.TopLeft
+    property alias leftVisualMargin: shape.anchors.leftMargin
+    property alias topVisualMargin: shape.anchors.topMargin
+    property alias rightVisualMargin: shape.anchors.rightMargin
+    property alias bottomVisualMargin: shape.anchors.bottomMargin
 
     property int implicitSize: 25
     property color color: "#000000"
@@ -23,6 +27,7 @@ Item {
     property bool isRight: isTopRight || isBottomRight
 
     Shape {
+        id: shape
         anchors {
             top: root.isTop ? parent.top : undefined
             bottom: root.isBottom ? parent.bottom : undefined
@@ -40,15 +45,15 @@ Item {
             pathHints: ShapePath.PathSolid & ShapePath.PathNonIntersecting
 
             startX: switch (root.corner) {
-                case RoundCorner.CornerEnum.TopLeft: return 0;
-                case RoundCorner.CornerEnum.TopRight: return root.implicitSize;
+                case RoundCorner.CornerEnum.TopLeft:
                 case RoundCorner.CornerEnum.BottomLeft: return 0;
+                case RoundCorner.CornerEnum.TopRight:
                 case RoundCorner.CornerEnum.BottomRight: return root.implicitSize;
             }
             startY: switch (root.corner) {
-                case RoundCorner.CornerEnum.TopLeft: return 0;
+                case RoundCorner.CornerEnum.TopLeft:
                 case RoundCorner.CornerEnum.TopRight: return 0;
-                case RoundCorner.CornerEnum.BottomLeft: return root.implicitSize;
+                case RoundCorner.CornerEnum.BottomLeft:
                 case RoundCorner.CornerEnum.BottomRight: return root.implicitSize;
             }
             PathAngleArc {
@@ -70,10 +75,6 @@ Item {
                 y: shapePath.startY
             }
         }
-    }
-
-    Behavior on implicitSize {
-        animation: Appearance?.animation.elementMoveFast.numberAnimation.createObject(this)
     }
 
 }

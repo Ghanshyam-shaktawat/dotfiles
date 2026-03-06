@@ -16,7 +16,7 @@ $character
 """
 
 # Replace the "❯" symbol in the prompt with "➜"
-[character]                            # The name of the module we are configuring is "character"
+[character] # The name of the module we are configuring is "character"
 success_symbol = "[   ](fg:blue)"
 error_symbol = "[   ](fg:red)"
 
@@ -53,7 +53,7 @@ deleted = " 🗑 "
 
 [hostname]
 ssh_only = false
-format =  "[•$hostname](bg:cyan fg:black)[](fg:cyan)"
+format = "[•$hostname](bg:cyan fg:black)[](fg:cyan)"
 trim_at = ".companyname.com"
 disabled = false
 

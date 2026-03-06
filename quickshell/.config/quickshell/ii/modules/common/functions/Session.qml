@@ -12,6 +12,10 @@ Singleton {
         });
     }
 
+    function changePassword() {
+        Quickshell.execDetached(["bash", "-c", `${Config.options.apps.changePassword}`]);
+    }
+
     function lock() {
         Quickshell.execDetached(["loginctl", "lock-session"]);
     }
@@ -22,7 +26,7 @@ Singleton {
 
     function logout() {
         closeAllWindows();
-        Quickshell.execDetached(["pkill", "Hyprland"]);
+        Quickshell.execDetached(["pkill", "-i", "Hyprland"]);
     }
 
     function launchTaskManager() {

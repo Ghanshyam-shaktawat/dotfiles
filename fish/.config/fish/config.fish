@@ -15,12 +15,6 @@ function fish_prompt -d "Write out the prompt"
         (set_color $fish_color_cwd) (prompt_pwd) (set_color normal)
 end
 
-if status is-interactive
-    # Commands to run in interactive sessions can go here
-    set fish_greeting
-
-end
-
 starship init fish | source
 if test -f ~/.local/state/quickshell/user/generated/terminal/sequences.txt
     cat ~/.local/state/quickshell/user/generated/terminal/sequences.txt
@@ -45,7 +39,7 @@ end
 #   set_color green; echo '> '
 # end
 
-fzf_configure_bindings --directory=\cf --variables=\e\cv
+# fzf_configure_bindings --directory=\cf --variables=\e\cv
 
 export JAVA_HOME=/opt/android-studio/jbr
 export ANDROID_HOME="$HOME/Android/Sdk"

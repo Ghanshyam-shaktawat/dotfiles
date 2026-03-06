@@ -1,6 +1,5 @@
 import qs.modules.common
 import QtQuick
-import QtQuick.Layouts
 
 Text {
     id: root
@@ -10,10 +9,14 @@ Text {
 
     renderType: Text.NativeRendering
     verticalAlignment: Text.AlignVCenter
+    property bool shouldUseNumberFont: /^\d+$/.test(root.text)
+    property var defaultFont: shouldUseNumberFont ? Appearance.font.family.numbers : Appearance.font.family.main
+    
     font {
-        hintingPreference: Font.PreferFullHinting
-        family: Appearance?.font.family.main ?? "sans-serif"
+        hintingPreference: Font.PreferDefaultHinting
+        family: defaultFont
         pixelSize: Appearance?.font.pixelSize.small ?? 15
+        variableAxes: shouldUseNumberFont ? ({}) : Appearance.font.variableAxes.main
     }
     color: Appearance?.m3colors.m3onBackground ?? "black"
     linkColor: Appearance?.m3colors.m3primary
@@ -25,6 +28,11 @@ Text {
         easing.bezierCurve: Appearance.animation.elementMoveFast.bezierCurve
     }
 
+    Component.onCompleted: {
+        textAnimationBehavior.originalX = root.x;
+        textAnimationBehavior.originalY = root.y;
+    }
+
     Behavior on text {
         id: textAnimationBehavior
         property real originalX: root.x
@@ -33,12 +41,6 @@ Text {
 
         SequentialAnimation {
             alwaysRunToEnd: true
-            ScriptAction {
-                script: textAnimationBehavior.originalX = root.x;
-            }
-            ScriptAction {
-                script: textAnimationBehavior.originalY = root.y;
-            }
             ParallelAnimation {
                 Anim {
                     property: "x"

@@ -10,7 +10,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import QtQuick.Window
-import qs
+import Quickshell
 import qs.services
 import qs.modules.common
 import qs.modules.common.widgets
@@ -29,14 +29,24 @@ ApplicationWindow {
             component: "modules/settings/QuickConfig.qml"
         },
         {
+            name: Translation.tr("General"),
+            icon: "browse",
+            component: "modules/settings/GeneralConfig.qml"
+        },
+        {
             name: Translation.tr("Bar"),
             icon: "toast",
             iconRotation: 180,
             component: "modules/settings/BarConfig.qml"
         },
         {
+            name: Translation.tr("Background"),
+            icon: "texture",
+            component: "modules/settings/BackgroundConfig.qml"
+        },
+        {
             name: Translation.tr("Interface"),
-            icon: "cards",
+            icon: "bottom_app_bar",
             component: "modules/settings/InterfaceConfig.qml"
         },
         {
@@ -63,10 +73,11 @@ ApplicationWindow {
 
     Component.onCompleted: {
         MaterialThemeLoader.reapplyTheme()
+        Config.readWriteDelay = 0 // Settings app always only sets one var at a time so delay isn't needed
     }
 
-    minimumWidth: 600
-    minimumHeight: 400
+    minimumWidth: 750
+    minimumHeight: 500
     width: 1100
     height: 750
     color: Appearance.m3colors.m3background
@@ -113,8 +124,11 @@ ApplicationWindow {
                 }
                 color: Appearance.colors.colOnLayer0
                 text: Translation.tr("Settings")
-                font.pixelSize: Appearance.font.pixelSize.title
-                font.family: Appearance.font.family.title
+                font {
+                    family: Appearance.font.family.title
+                    pixelSize: Appearance.font.pixelSize.title
+                    variableAxes: Appearance.font.variableAxes.title
+                }
             }
             RowLayout { // Window controls row
                 id: windowControlsRow
@@ -163,15 +177,29 @@ ApplicationWindow {
 
                     FloatingActionButton {
                         id: fab
-                        iconText: "edit"
-                        buttonText: Translation.tr("Config file")
+                        property bool justCopied: false
+                        iconText: justCopied ? "check" : "edit"
+                        buttonText: justCopied ? Translation.tr("Path copied") : Translation.tr("Config file")
                         expanded: navRail.expanded
-                        onClicked: {
+                        downAction: () => {
                             Qt.openUrlExternally(`${Directories.config}/illogical-impulse/config.json`);
+                        }
+                        altAction: () => {
+                            Quickshell.clipboardText = CF.FileUtils.trimFileProtocol(`${Directories.config}/illogical-impulse/config.json`);
+                            fab.justCopied = true;
+                            revertTextTimer.restart()
+                        }
+
+                        Timer {
+                            id: revertTextTimer
+                            interval: 1500
+                            onTriggered: {
+                                fab.justCopied = false;
+                            }
                         }
 
                         StyledToolTip {
-                            content: Translation.tr("Open the shell config file.\nIf the button doesn't work or doesn't open in your favorite editor,\nyou can manually open ~/.config/illogical-impulse/config.json")
+                            text: Translation.tr("Open the shell config file\nAlternatively right-click to copy path")
                         }
                     }
 
@@ -184,7 +212,7 @@ ApplicationWindow {
                                 required property var index
                                 required property var modelData
                                 toggled: root.currentPage === index
-                                onClicked: root.currentPage = index;
+                                onPressed: root.currentPage = index;
                                 expanded: navRail.expanded
                                 buttonIcon: modelData.icon
                                 buttonIconRotation: modelData.iconRotation || 0
@@ -211,15 +239,15 @@ ApplicationWindow {
                     opacity: 1.0
 
                     active: Config.ready
-                    source: root.pages[0].component
+                    Component.onCompleted: {
+                        source = root.pages[0].component
+                    }
 
                     Connections {
                         target: root
                         function onCurrentPageChanged() {
-                            if (pageLoader.sourceComponent !== root.pages[root.currentPage].component) {
-                                switchAnim.complete();
-                                switchAnim.start();
-                            }
+                            switchAnim.complete();
+                            switchAnim.start();
                         }
                     }
 

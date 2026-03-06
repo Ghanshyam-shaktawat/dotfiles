@@ -3,12 +3,11 @@ pragma ComponentBehavior: Bound
 
 import qs.modules.common.functions as CF
 import qs.modules.common
-import qs
 import Quickshell
 import Quickshell.Io
 import Quickshell.Wayland
 import QtQuick
-import "./ai/"
+import qs.services.ai
 
 /**
  * Basic service to handle LLM chats. Supports Google's and OpenAI's API formats.
@@ -255,7 +254,7 @@ Singleton {
     // - key_get_description: Description of pricing and how to get an API key
     // - api_format: The API format of the model. Can be "openai" or "gemini". Default is "openai".
     // - extraParams: Extra parameters to be passed to the model. This is a JSON object.
-    property var models: {
+    property var models: Config.options.policies.ai === 2 ? {} : {
         "gemini-2.0-flash": aiModelComponent.createObject(this, {
             "name": "Gemini 2.0 Flash",
             "icon": "google-gemini-symbolic",
@@ -533,8 +532,6 @@ Singleton {
         modelId = modelId.toLowerCase()
         if (modelList.indexOf(modelId) !== -1) {
             const model = models[modelId]
-            // Fetch API keys if needed
-            if (model?.requires_key) KeyringStorage.fetchKeyringData();
             // See if policy prevents online models
             if (Config.options.policies.ai === 2 && !model.endpoint.includes("localhost")) {
                 root.addMessage(
@@ -642,6 +639,10 @@ Singleton {
 
         function makeRequest() {
             const model = models[currentModelId];
+
+            // Fetch API keys if needed
+            if (model?.requires_key && !KeyringStorage.loaded) KeyringStorage.fetchKeyringData();
+            
             requester.currentStrategy = root.currentApiStrategy;
             requester.currentStrategy.reset(); // Reset strategy state
 
@@ -770,6 +771,18 @@ Singleton {
         root.pendingFilePath = CF.FileUtils.trimFileProtocol(filePath);
     }
 
+    function regenerate(messageIndex) {
+        if (messageIndex < 0 || messageIndex >= messageIDs.length) return;
+        const id = root.messageIDs[messageIndex];
+        const message = root.messageByID[id];
+        if (message.role !== "assistant") return;
+        // Remove all messages after this one
+        for (let i = root.messageIDs.length - 1; i >= messageIndex; i--) {
+            root.removeMessage(i);
+        }
+        requester.makeRequest();
+    }
+
     function createFunctionOutputMessage(name, output, includeOutputInChat = true) {
         return aiMessageComponent.createObject(root, {
             "role": "user",
@@ -887,8 +900,8 @@ Singleton {
 
     FileView {
         id: chatSaveFile
-        property string chatName: "chat"
-        path: `${Directories.aiChats}/${chatName}.json`
+        property string chatName: ""
+        path: chatName.length > 0 ? `${Directories.aiChats}/${chatName}.json` : ""
         blockLoading: true // Prevent race conditions
     }
 

@@ -21,7 +21,9 @@ if test -f ~/.local/state/quickshell/user/generated/terminal/sequences.txt
 end
 
 alias pamcan pacman
-alias clear "printf '\033[2J\033[3J\033[1;1H'"
+alias clear "printf '\033[2J\033[3J\033[1;1H'" # fix: kitty doesn't clear properly
+alias celar "printf '\033[2J\033[3J\033[1;1H'"
+alias claer "printf '\033[2J\033[3J\033[1;1H'"
 alias q 'qs -c ii'
 alias vim nvim
 alias vi nvim
@@ -33,11 +35,6 @@ if not string match -q -- $PNPM_HOME $PATH
     set -gx PATH "$PNPM_HOME" $PATH
 end
 # pnpm end
-
-# function fish_prompt
-#   set_color cyan; echo (pwd)
-#   set_color green; echo '> '
-# end
 
 # fzf_configure_bindings --directory=\cf --variables=\e\cv
 
@@ -64,3 +61,6 @@ set --export BUN_INSTALL "$HOME/.bun"
 set --export PATH $BUN_INSTALL/bin $PATH
 
 zoxide init fish | source
+
+# opencode
+fish_add_path /home/ghanshyam/.opencode/bin
